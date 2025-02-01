@@ -60,12 +60,7 @@ def tt_split_as_numpy(train: None, test: None,
     - `shuffle`: False
   Returns:
     (ordered) X_train[np.ndarray], X_test[np.ndarray], y_train[np.ndarray], y_test[np.ndarray]
-  
-  Raises:
   """
-  import sklearn
-  from sklearn.model_selection import train_test_split
-
   try:
     X_train, X_test, y_train, y_test = train_test_split(
       train, test,
@@ -81,5 +76,54 @@ def tt_split_as_numpy(train: None, test: None,
     print("\nFull error:")
     raise
 
-def tt_split_as_tensor():
-  pass
+def tt_split_as_tensor(train: None, test: None,
+                      train_size: float = 0.8,
+                      test_size: float = 0.2,
+                      random_state: int = 235,
+                      shuffle: bool = False) -> tuple["torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor"]:
+  """
+  Makes use of `sklearn.model_selection.train_test_split` if it is imported.
+  Returns 4 ordered values, `X_train, X_test, y_train, y_test` AS TENSORS.
+
+  This function is based on the following usage of `train_test_split`:
+
+  ```
+  X_train, X_test, y_train, y_test = train_test_split(
+      X, y,
+      train_size=0.8,
+      test_size=0.2,
+      random_state=RANDOM_SEED,
+      shuffle=SHUFFLE
+  )
+
+  X_train, X_test = torch.from_numpy(X_train), torch.from_numpy(X_test)
+  y_train, y_test = torch.from_numpy(y_train), torch.from_numpy(y_test)
+  ```
+
+  Args:
+    - `train`: Dataset with features
+    - `test`: Dataset with labels
+    - `train_size`: Percentage used for train/test split creation (0.8==80%)
+    - `test_size`: Percentage used for train/test split creation (0.2==20%)
+    - `random_state`: Random seed for reproducability
+    - `shuffle`: Whether or not to shuffle the data when creating the split
+  Defaults:
+    - `train_size`: 0.8
+    - `test_size`: 0.2
+    - `random_state`: 235
+    - `shuffle`: False
+  Returns:
+    (ordered) X_train[torch.Tensor], X_test[torch.Tensor], y_train[torch.Tensor], y_test[torch.Tensor]
+  """
+  X_train, X_test, y_train, y_test = tt_split_as_numpy(
+      train=train, test=test,
+      train_size=train_size,
+      test_size=test_size,
+      random_state=random_state,
+      shuffle=shuffle
+  )
+
+  X_train, X_test = torch.from_numpy(X_train), torch.from_numpy(X_test)
+  y_train, y_test = torch.from_numpy(y_train), torch.from_numpy(y_test)
+
+  return X_train, X_test, y_train, y_test
