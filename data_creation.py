@@ -63,6 +63,9 @@ def tt_split_as_numpy(train: None, test: None,
   
   Raises:
   """
+  import sklearn
+  from sklearn.model_selection import train_test_split
+
   try:
     X_train, X_test, y_train, y_test = train_test_split(
       train, test,
