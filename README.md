@@ -6,9 +6,7 @@
 
 ``` py
 !git clone https://github.com/0x7070/model_utils.git
-
-import sys
-sys.path.append('/content/model_utils/utils')
+from model_utils.data_creation import tt_split_as_numpy
 
 # imports here:
 ```
