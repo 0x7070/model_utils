@@ -1,7 +1,9 @@
 ### HELPER FUNCTIONS
 # model_utils/info
 
-def tens_shapes(*tensors: torch.Tensor) -> None:
+import torch
+
+def tens_shapes(*tensors: "torch.Tensor") -> None:
   """
   Makes use of `torch.Tensor` if it is imported.
 
@@ -21,3 +23,4 @@ def tens_shapes(*tensors: torch.Tensor) -> None:
       print(f"Shape of tensor at arg{idx}: {tensor.shape}")
     else:
       print(f"Error: Cannot call `torch.Tensor.shape` on variable at arg{idx}.")
+
