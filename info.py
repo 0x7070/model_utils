@@ -39,3 +39,17 @@ def tens_op(*tensors: "torch.Tensor",
       print(f"Result of operation on tensor at arg{idx}: {func(tensor)}")
     else:
       print(f"Error: Cannot call `{func.__name__}` on variable at arg{idx}.")
+
+def likewise_op(*args: "torch.Tensor",
+            func=type) -> None:
+  """
+  Executes `func` on all variables passed into the `args` parameter.
+
+  All variables passed must be of a datatype operable by the provided `func`.
+  """
+  print(f"Operation: {func.__name__}")
+  for idx, var in enumerate(args):
+    try:
+      print(f"Result of operation on var at arg{idx}: {func(var)}")
+    except:
+      print(f"Error: Cannot call `{func.__name__}` on variable at arg{idx}.")
